@@ -13,10 +13,7 @@ var app = express()
 
 
 const BUCKET_NAME = 'yuanzhenghu'
-const s3 = new aws.S3({
-    accessKeyId: ID,
-    secretAccessKey: SECRET
-});
+const s3 = new aws.S3();
 
 
 app.set('view engine','ejs')
@@ -87,10 +84,10 @@ app.get('/', (req,res) => res.render('index'))
 // app.post('/upload',(req,res)=>{
 //     res.end(bodyParser.json(req.body) + "\n");
 // })
+var port = process.env.PORT || 8080;
+app.listen(port, ()=>{
 
-app.listen(3000, ()=>{
-
-    console.log(`server runnning on 3000`)
+    console.log(`server runnning on ${port}`)
 })
 
 // upload(req,res, err =>{
