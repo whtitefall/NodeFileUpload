@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var aws = require('aws-sdk')
 var multerS3 = require('multer-s3')
 
-
+aws.config.region = 'ca-central-1';
 var app = express()
 
 
