@@ -22,7 +22,7 @@ app.use(express.static('./public'))
 var upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'yuanzhenghu',
+    bucket: process.env.S3_BUCKET_NAME,
     metadata: function (req, file, cb) {
       cb(null, {fieldName: file.fieldname});
     },
