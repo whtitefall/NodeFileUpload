@@ -26,8 +26,9 @@ var upload = multer({
     metadata: function (req, file, cb) {
       cb(null, {fieldName: file.fieldname});
     },
+    contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
-      cb(null, Date.now().toString())
+      cb(null, file.originalname)
     }
   })
 })
