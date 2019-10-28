@@ -22,7 +22,7 @@ app.use(express.static('./public'))
 var upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: process.env.S3_BUCKET_NAME,
+    bucket: process.env.S3_BUCKET_NAME||'yuanzhenghu',
     metadata: function (req, file, cb) {
       cb(null, {fieldName: file.fieldname});
     },
@@ -32,9 +32,33 @@ var upload = multer({
     }
   })
 })
- 
-app.post('/upload', upload.array('myimg', 1), function(req, res, next) {
-    res.send('Successfully uploaded ' + req.files.length + ' files!')
+
+
+var params = {
+  Bucket:  process.env.S3_BUCKET_NAME||'yuanzhenghu', 
+  MaxKeys: 10
+ };
+
+
+ const url = s3.getSignedUrl('getObject', {
+  Bucket: process.env.S3_BUCKET_NAME||'yuanzhenghu',
+  Key:  'g.mp4',
+  Expires: 60
+})
+
+app.post('/', upload.array('myimg', 1), function(req, res, next) {
+
+
+            s3.listObjects(params,(err,data)=>{
+              if(err) {
+                console.log(err,err.stack)
+              }else {
+                res.render('index',{
+                  result:'File uploaded',
+                  listobjects: data, 
+                })
+              }
+            })
   })
 
 // set storage engine
@@ -80,12 +104,30 @@ app.post('/upload', upload.array('myimg', 1), function(req, res, next) {
 
 // app.use(express.static('./public'))
 
-app.get('/', (req,res) => res.render('index'))
+app.get('/', (req,res) =>{
+  // const url = s3.getSignedUrl('getObject', {
+  //   Bucket: process.env.S3_BUCKET_NAME||'yuanzhenghu',
+  //   Key: 'g.mp4',
+  //   Expires: 60
+  // })
+  
+    s3.listObjects(params,(err,data)=>{
+        if(err) {
+          console.log(err,err.stack)
+        }else {
+          res.render('index',{
+            listobjects: data, 
+            url
+          })
+        }
+      })
+
+})
 
 // app.post('/upload',(req,res)=>{
 //     res.end(bodyParser.json(req.body) + "\n");
 // })
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3000;
 app.listen(port, ()=>{
 
     console.log(`server runnning on ${port}`)

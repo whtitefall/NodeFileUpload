@@ -21,7 +21,7 @@
         <h1>File upload</h1>
         <%= typeof msg != 'undefined' ? msg : '' %>
         
-    <form action="/upload" method="POST" enctype="multipart/form-data">
+    <form action="/" method="POST" enctype="multipart/form-data">
         <div class="file-field input-field">
         <div class="btn grey">
             <span>File</span>
@@ -38,6 +38,25 @@
          </a>
     </form>
     <br>
+
+    <div >
+        <label> <%= typeof result != 'undefined' ? result : ''  %> </label>
+    </div>
+
+    <ul class="collection with-header">
+        <% if (typeof listobjects != 'undefined' ){ %>
+            <li class="collection-header"><h4>Current Files: </h4></li>
+
+            <%    for (let index = 0; index < listobjects['Contents'].length; index++) {  %>
+
+              
+                <a href="<%= url %>" class="collection-item">  <%=   listobjects['Contents'][index]['Key']  %> </a>
+                   
+                <%  }   %>
+    
+        <%  }   %>
+
+    </ul>
 
     <img src="<%= typeof file != 'undefined' ? file : '' %>" class="responsive-img">
 
