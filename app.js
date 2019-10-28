@@ -45,7 +45,7 @@ var params = {
  const url = s3.getSignedUrl('getObject', {
   Bucket: process.env.S3_BUCKET_NAME||'yuanzhenghu',
   Key:  'Dota 2 Screenshot 2018.04.28 - 17.38.56.14.png',
-  Expires: 60
+  Expires: 60 * 5
 })
 
 app.post('/', upload.array('myimg', 1), function(req, res, next) {
