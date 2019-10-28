@@ -58,6 +58,7 @@ app.post('/', upload.array('myimg', 1), function(req, res, next) {
                 res.render('index',{
                   result:'File uploaded',
                   listobjects: data, 
+                  url
                 })
               }
             })
