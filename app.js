@@ -13,7 +13,9 @@ var app = express()
 
 
 const BUCKET_NAME = 'yuanzhenghu'
-const s3 = new aws.S3();
+const s3 = new aws.S3(
+  {signatureVersion: 'v4'}
+);
 
 
 app.set('view engine','ejs')
