@@ -44,7 +44,7 @@ var params = {
 
  const url = s3.getSignedUrl('getObject', {
   Bucket: process.env.S3_BUCKET_NAME||'yuanzhenghu',
-  Key:  'g.mp4',
+  Key:  'Dota 2 Screenshot 2018.01.10 - 19.27.10.21.png',
   Expires: 60 * 5
 })
 
